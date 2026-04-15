@@ -11,12 +11,12 @@ def get_sessions():
     response.raise_for_status()
     return response.json()
 
-def get_drivers():
-    response = requests.get(f"{BASE_URL}/drivers", timeout=30)
+def get_drivers(session_key: int):
+    response = requests.get(f"{BASE_URL}/drivers", params={"session_key": session_key}, timeout=30)
     response.raise_for_status()
     return response.json()
 
-def get_laps():
-    response = requests.get(f"{BASE_URL}/laps", timeout=30)
+def get_laps(session_key: int):
+    response = requests.get(f"{BASE_URL}/laps", params={"session_key": session_key}, timeout=30)
     response.raise_for_status()
     return response.json()

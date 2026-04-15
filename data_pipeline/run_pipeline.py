@@ -3,23 +3,19 @@ from data_pipeline.load_openf1 import load_sessions, load_drivers, load_laps
 
 def run():
     sessions = get_sessions()
-    drivers = get_drivers()
-    laps = get_laps()
+    sessions_2026 = [s for s in sessions if s.get("year") == 2026]
+    sessions_2026 = sessions_2026[:2]
 
-    print(f"{len(sessions)} sessions opgehaald")
-    load_sessions(sessions)
-    print(sessions[0])
-    print("Sessions loaded into database")
+    for session in sessions_2026:
+        session_key = session["session_key"]
 
-    print(f"{len(laps)} laps opgehaald")
-    load_laps(laps)
-    print(laps[0])
-    print("Laps loaded into database")
+        drivers = get_drivers(session_key)
+        load_drivers(drivers)
 
-    print(f"{len(drivers)} drivers opgehaald")
-    load_drivers(drivers)
-    print(drivers[0])
-    print("Drivers loaded into database")
+        laps = get_laps(session_key)
+        load_laps(laps)
+
+        print(f"Loaded session {session_key}")
 
 if __name__ == "__main__":
     run()
